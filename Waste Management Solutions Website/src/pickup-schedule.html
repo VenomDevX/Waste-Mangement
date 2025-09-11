@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Waste Pickup - WasteWise India</title>
+    <link rel="stylesheet" href="/styles/globals.css">
+    <link rel="stylesheet" href="/styles/pickup-schedule.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🌱</span>
+                    <span>WasteWise India</span>
+                </div>
+                
+                <nav class="nav">
+                    <a href="/index.html">Home</a>
+                    <a href="#dashboard">Dashboard</a>
+                    <a href="#training">Training</a>
+                    <a href="#facilities">Facilities</a>
+                    <a href="#community">Community</a>
+                </nav>
+
+                <a href="#" class="btn">
+                    <span>👤</span> Profile
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="breadcrumb">
+                    <a href="/index.html">Home</a>
+                    <span class="separator">/</span>
+                    <span class="current">Schedule Pickup</span>
+                </div>
+                
+                <div class="header-content">
+                    <div class="header-text">
+                        <h1>Schedule Waste Pickup</h1>
+                        <p>Book a convenient time for waste collection from your doorstep. Our certified waste management partners ensure proper handling and disposal.</p>
+                    </div>
+                    
+                    <div class="header-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">🚛</div>
+                            <div class="stat-content">
+                                <div class="stat-number">2,847</div>
+                                <div class="stat-label">Pickups Today</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏰</div>
+                            <div class="stat-content">
+                                <div class="stat-number">98.5%</div>
+                                <div class="stat-label">On-Time Rate</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">♻️</div>
+                            <div class="stat-content">
+                                <div class="stat-number">156</div>
+                                <div class="stat-label">Tonnes Collected</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pickup Schedule Form -->
+            <div class="schedule-container">
+                <div class="schedule-grid">
+                    <!-- Left Column - Form -->
+                    <div class="form-section">
+                        <form class="pickup-form" id="pickup-form">
+                            <!-- Step 1: Location Details -->
+                            <div class="form-step active" data-step="1">
+                                <div class="step-header">
+                                    <div class="step-indicator">
+                                        <span class="step-number">1</span>
+                                    </div>
+                                    <div class="step-content">
+                                        <h3>Location Details</h3>
+                                        <p>Where should we collect the waste?</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pickup-type">Pickup Type</label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="pickup-type" value="residential" checked>
+                                            <span class="radio-custom"></span>
+                                            <div class="radio-content">
+                                                <span class="radio-title">🏠 Residential</span>
+                                                <span class="radio-desc">Home pickup service</span>
+                                            </div>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="pickup-type" value="commercial">
+                                            <span class="radio-custom"></span>
+                                            <div class="radio-content">
+                                                <span class="radio-title">🏢 Commercial</span>
+                                                <span class="radio-desc">Business/office pickup</span>
+                                            </div>
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="pickup-type" value="community">
+                                            <span class="radio-custom"></span>
+                                            <div class="radio-content">
+                                                <span class="radio-title">🏘️ Community</span>
+                                                <span class="radio-desc">Society/apartment complex</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="address">Complete Address *</label>
+                                        <textarea id="address" name="address" placeholder="Enter your complete address including landmarks" required rows="3"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="pincode">PIN Code *</label>
+                                        <input type="text" id="pincode" name="pincode" placeholder="Enter 6-digit PIN code" pattern="[0-9]{6}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="city">City *</label>
+                                        <input type="text" id="city" name="city" placeholder="Enter city name" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contact">Contact Information *</label>
+                                    <div class="form-row">
+                                        <input type="text" id="contact-name" name="contact-name" placeholder="Full Name" required>
+                                        <input type="tel" id="contact-phone" name="contact-phone" placeholder="Phone Number" pattern="[0-9]{10}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Waste Details -->
+                            <div class="form-step" data-step="2">
+                                <div class="step-header">
+                                    <div class="step-indicator">
+                                        <span class="step-number">2</span>
+                                    </div>
+                                    <div class="step-content">
+                                        <h3>Waste Details</h3>
+                                        <p>What type of waste needs to be collected?</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Waste Categories *</label>
+                                    <div class="checkbox-grid">
+                                        <label class="checkbox-card">
+                                            <input type="checkbox" name="waste-type" value="wet-waste">
+                                            <div class="checkbox-content">
+                                                <div class="checkbox-icon">🥬</div>
+                                                <div class="checkbox-title">Wet Waste</div>
+                                                <div class="checkbox-desc">Kitchen scraps, food waste</div>
+                                            </div>
+                                        </label>
+                                        <label class="checkbox-card">
+                                            <input type="checkbox" name="waste-type" value="dry-waste">
+                                            <div class="checkbox-content">
+                                                <div class="checkbox-icon">📄</div>
+                                                <div class="checkbox-title">Dry Waste</div>
+                                                <div class="checkbox-desc">Paper, plastic, metal, glass</div>
+                                            </div>
+                                        </label>
+                                        <label class="checkbox-card">
+                                            <input type="checkbox" name="waste-type" value="e-waste">
+                                            <div class="checkbox-content">
+                                                <div class="checkbox-icon">💻</div>
+                                                <div class="checkbox-title">E-Waste</div>
+                                                <div class="checkbox-desc">Electronics, batteries</div>
+                                            </div>
+                                        </label>
+                                        <label class="checkbox-card">
+                                            <input type="checkbox" name="waste-type" value="hazardous">
+                                            <div class="checkbox-content">
+                                                <div class="checkbox-icon">⚠️</div>
+                                                <div class="checkbox-title">Hazardous</div>
+                                                <div class="checkbox-desc">Chemicals, medical waste</div>
+                                            </div>
+                                        </label>
+                                        <label class="checkbox-card">
+                                            <input type="checkbox" name="waste-type" value="construction">
+                                            <div class="checkbox-content">
+                                                <div class="checkbox-icon">🧱</div>
+                                                <div class="checkbox-title">Construction</div>
+                                                <div class="checkbox-desc">Debris, renovation waste</div>
+                                            </div>
+                                        </label>
+                                        <label class="checkbox-card">
+                                            <input type="checkbox" name="waste-type" value="garden">
+                                            <div class="checkbox-content">
+                                                <div class="checkbox-icon">🌿</div>
+                                                <div class="checkbox-title">Garden Waste</div>
+                                                <div class="checkbox-desc">Leaves, branches, grass</div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="quantity">Estimated Quantity</label>
+                                    <div class="quantity-selector">
+                                        <label class="quantity-option">
+                                            <input type="radio" name="quantity" value="small" checked>
+                                            <span class="quantity-card">
+                                                <span class="quantity-icon">🛍️</span>
+                                                <span class="quantity-title">Small</span>
+                                                <span class="quantity-desc">1-2 bags</span>
+                                            </span>
+                                        </label>
+                                        <label class="quantity-option">
+                                            <input type="radio" name="quantity" value="medium">
+                                            <span class="quantity-card">
+                                                <span class="quantity-icon">🗑️</span>
+                                                <span class="quantity-title">Medium</span>
+                                                <span class="quantity-desc">3-5 bags</span>
+                                            </span>
+                                        </label>
+                                        <label class="quantity-option">
+                                            <input type="radio" name="quantity" value="large">
+                                            <span class="quantity-card">
+                                                <span class="quantity-icon">🚛</span>
+                                                <span class="quantity-title">Large</span>
+                                                <span class="quantity-desc">6+ bags</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="special-instructions">Special Instructions</label>
+                                    <textarea id="special-instructions" name="special-instructions" placeholder="Any specific handling requirements or additional notes" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Schedule -->
+                            <div class="form-step" data-step="3">
+                                <div class="step-header">
+                                    <div class="step-indicator">
+                                        <span class="step-number">3</span>
+                                    </div>
+                                    <div class="step-content">
+                                        <h3>Schedule Pickup</h3>
+                                        <p>Choose your preferred date and time</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pickup-date">Pickup Date *</label>
+                                    <input type="date" id="pickup-date" name="pickup-date" required min="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Preferred Time Slot *</label>
+                                    <div class="time-slots">
+                                        <label class="time-slot">
+                                            <input type="radio" name="time-slot" value="morning" required>
+                                            <span class="slot-card">
+                                                <span class="slot-icon">🌅</span>
+                                                <span class="slot-title">Morning</span>
+                                                <span class="slot-time">6:00 AM - 10:00 AM</span>
+                                            </span>
+                                        </label>
+                                        <label class="time-slot">
+                                            <input type="radio" name="time-slot" value="afternoon">
+                                            <span class="slot-card">
+                                                <span class="slot-icon">☀️</span>
+                                                <span class="slot-title">Afternoon</span>
+                                                <span class="slot-time">10:00 AM - 2:00 PM</span>
+                                            </span>
+                                        </label>
+                                        <label class="time-slot">
+                                            <input type="radio" name="time-slot" value="evening">
+                                            <span class="slot-card">
+                                                <span class="slot-icon">🌆</span>
+                                                <span class="slot-title">Evening</span>
+                                                <span class="slot-time">2:00 PM - 6:00 PM</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Pickup Frequency</label>
+                                    <div class="frequency-options">
+                                        <label class="frequency-option">
+                                            <input type="radio" name="frequency" value="one-time" checked>
+                                            <span class="frequency-card">
+                                                <span class="frequency-title">One-time Pickup</span>
+                                                <span class="frequency-desc">Single collection</span>
+                                            </span>
+                                        </label>
+                                        <label class="frequency-option">
+                                            <input type="radio" name="frequency" value="weekly">
+                                            <span class="frequency-card">
+                                                <span class="frequency-title">Weekly</span>
+                                                <span class="frequency-desc">Every week</span>
+                                            </span>
+                                        </label>
+                                        <label class="frequency-option">
+                                            <input type="radio" name="frequency" value="bi-weekly">
+                                            <span class="frequency-card">
+                                                <span class="frequency-title">Bi-weekly</span>
+                                                <span class="frequency-desc">Every 2 weeks</span>
+                                            </span>
+                                        </label>
+                                        <label class="frequency-option">
+                                            <input type="radio" name="frequency" value="monthly">
+                                            <span class="frequency-card">
+                                                <span class="frequency-title">Monthly</span>
+                                                <span class="frequency-desc">Once a month</span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Navigation Buttons -->
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-secondary" id="prev-btn" style="display: none;">
+                                    ← Previous
+                                </button>
+                                <button type="button" class="btn btn-primary" id="next-btn">
+                                    Next →
+                                </button>
+                                <button type="submit" class="btn btn-primary" id="submit-btn" style="display: none;">
+                                    Schedule Pickup
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right Column - Summary -->
+                    <div class="summary-section">
+                        <div class="summary-card">
+                            <div class="summary-header">
+                                <h3>Pickup Summary</h3>
+                                <span class="summary-status">Draft</span>
+                            </div>
+
+                            <div class="summary-content" id="summary-content">
+                                <div class="summary-empty">
+                                    <div class="empty-icon">📋</div>
+                                    <p>Fill out the form to see your pickup summary</p>
+                                </div>
+                            </div>
+
+                            <div class="summary-footer">
+                                <div class="pricing-info">
+                                    <div class="price-row">
+                                        <span>Service Charge</span>
+                                        <span id="service-charge">₹0</span>
+                                    </div>
+                                    <div class="price-row">
+                                        <span>Convenience Fee</span>
+                                        <span id="convenience-fee">₹0</span>
+                                    </div>
+                                    <div class="price-row total">
+                                        <span>Total Amount</span>
+                                        <span id="total-amount">₹0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Guidelines -->
+                        <div class="guidelines-card">
+                            <h4>Service Guidelines</h4>
+                            <ul class="guidelines-list">
+                                <li>
+                                    <span class="guideline-icon">✅</span>
+                                    <span>Segregate waste properly before pickup</span>
+                                </li>
+                                <li>
+                                    <span class="guideline-icon">📞</span>
+                                    <span>Our team will call 30 minutes before arrival</span>
+                                </li>
+                                <li>
+                                    <span class="guideline-icon">🕐</span>
+                                    <span>Please be available during the scheduled time slot</span>
+                                </li>
+                                <li>
+                                    <span class="guideline-icon">♻️</span>
+                                    <span>Receive digital certificate for eco-contribution</span>
+                                </li>
+                                <li>
+                                    <span class="guideline-icon">💰</span>
+                                    <span>Pay online or cash on pickup</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal (Hidden by default) -->
+    <div class="modal-overlay" id="success-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="success-icon">✅</div>
+                <h3>Pickup Scheduled Successfully!</h3>
+                <p>Your waste pickup has been scheduled. You'll receive a confirmation SMS shortly.</p>
+            </div>
+            
+            <div class="modal-body">
+                <div class="confirmation-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Booking ID:</span>
+                        <span class="detail-value" id="booking-id">WW-2024-001234</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Pickup Date:</span>
+                        <span class="detail-value" id="confirm-date">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Time Slot:</span>
+                        <span class="detail-value" id="confirm-time">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Estimated Cost:</span>
+                        <span class="detail-value" id="confirm-cost">₹0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" onclick="viewBookings()">View My Bookings</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/styles/pickup-schedule.js"></script>
+</body>
+</html>

@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WasteWise India - Smart Waste Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #ffffff;
+            --foreground: #0a0a0a;
+            --muted: #ececf0;
+            --muted-foreground: #717182;
+            --card: #ffffff;
+            --border: rgba(0, 0, 0, 0.1);
+            --green-600: #16a34a;
+            --green-700: #15803d;
+            --green-50: #f0fdf4;
+            --green-100: #dcfce7;
+            --green-200: #bbf7d0;
+            --blue-50: #eff6ff;
+            --blue-600: #2563eb;
+            --red-50: #fef2f2;
+            --red-600: #dc2626;
+            --red-700: #b91c1c;
+            --red-800: #991b1b;
+            --yellow-50: #fefce8;
+            --yellow-600: #ca8a04;
+            --yellow-700: #a16207;
+            --purple-600: #9333ea;
+            --orange-600: #ea580c;
+            --radius: 0.625rem;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--foreground);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            width: 100%;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            height: 4rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            color: var(--green-600);
+        }
+
+        .nav {
+            display: none;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--foreground);
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--green-600);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--background);
+            color: var(--foreground);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: var(--muted);
+        }
+
+        .btn-primary {
+            background: var(--green-600);
+            color: white;
+            border-color: var(--green-600);
+        }
+
+        .btn-primary:hover {
+            background: var(--green-700);
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--green-50), var(--blue-50));
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .hero-title .highlight {
+            color: var(--green-600);
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            max-width: 32rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 24rem;
+            object-fit: cover;
+            border-radius: calc(var(--radius) * 2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding-top: 2rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            width: 2rem;
+            height: 2rem;
+            margin: 0 auto 0.5rem;
+        }
+
+        .card-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .card-label {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            text-align: center;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto 3rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* Training Section */
+        .training-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .training-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: calc(var(--radius) / 2);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-completed {
+            background: var(--green-100);
+            color: var(--green-600);
+        }
+
+        .badge-progress {
+            background: var(--muted);
+            color: var(--muted-foreground);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 0.5rem;
+            background: var(--muted);
+            border-radius: calc(var(--radius) / 2);
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--green-600);
+            transition: width 0.3s;
+        }
+
+        /* Facilities Section */
+        .facility-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: box-shadow 0.3s;
+        }
+
+        .facility-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .facility-header {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .facility-icon {
+            padding: 0.75rem;
+            background: var(--green-100);
+            border-radius: var(--radius);
+            color: var(--green-600);
+        }
+
+        /* Community Section */
+        .post-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            background: var(--green-600);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+            border-radius: var(--radius);
+            margin: 1rem 0;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Report Section */
+        .report-form {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            min-height: 6rem;
+            resize: vertical;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            color: var(--muted-foreground);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--muted);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--muted-foreground);
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--green-600);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .nav {
+                display: flex;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: row;
+            }
+
+            .hero-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-green { color: var(--green-600); }
+        .text-blue { color: var(--blue-600); }
+        .text-purple { color: var(--purple-600); }
+        .text-orange { color: var(--orange-600); }
+        .bg-green-50 { background-color: var(--green-50); }
+        .bg-red-50 { background-color: var(--red-50); }
+        .border-green { border-color: var(--green-200); }
+        .border-red { border-color: rgba(239, 68, 68, 0.3); }
+        .w-full { width: 100%; }
+        .hidden { display: none; }
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mt-4 { margin-top: 1rem; }
+        .p-4 { padding: 1rem; }
+
+        /* Icons (using Unicode symbols as fallback) */
+        .icon-leaf::before { content: "🌱"; }
+        .icon-recycle::before { content: "♻️"; }
+        .icon-users::before { content: "👥"; }
+        .icon-map::before { content: "📍"; }
+        .icon-camera::before { content: "📷"; }
+        .icon-award::before { content: "🏆"; }
+        .icon-truck::before { content: "🚛"; }
+        .icon-factory::before { content: "🏭"; }
+    </style>
+    <link rel="stylesheet" href="/styles/quiz.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon icon-leaf"></span>
+                    <span>WasteWise India</span>
+                </div>
+                
+                <nav class="nav">
+                    <a href="#dashboard">Dashboard</a>
+                    <a href="#training">Training</a>
+                    <a href="#facilities">Facilities</a>
+                    <a href="#community">Community</a>
+                    <a href="#report">Report</a>
+                </nav>
+
+                <a href="#" class="btn">
+                    <span>👤</span> Profile
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Transform India's <span class="highlight">Waste Management</span>
+                    </h1>
+                    <p class="hero-description">
+                        Join the nationwide initiative to achieve 100% scientific waste treatment. 
+                        Get trained, track waste, and build a cleaner, greener India together.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#training" class="btn btn-primary btn-lg">
+                            Start Training Now →
+                        </a>
+                        <a href="#facilities" class="btn btn-lg">
+                            Find Facilities Near You
+                        </a>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="card">
+                            <div class="card-icon text-green icon-recycle"></div>
+                            <div class="card-value">54%</div>
+                            <div class="card-label">Waste Treated</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon text-blue icon-users"></div>
+                            <div class="card-value">1.7L</div>
+                            <div class="card-label">Tonnes/Day</div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon text-purple icon-map"></div>
+                            <div class="card-value">249</div>
+                            <div class="card-label">WTE Plants</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="https://images.unsplash.com/photo-1635605007233-f89705544846?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXN0ZSUyMG1hbmFnZW1lbnQlMjByZWN5Y2xpbmclMjBlbnZpcm9ubWVudHxlbnwxfHx8fDE3NTczNDk2MzN8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                         alt="Waste Management and Recycling" 
+                         class="hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="section">
+        <div class="container">
+            <h2 class="section-title">National Waste Management Dashboard</h2>
+            <p class="section-description">
+                Real-time insights into India's waste management progress. 
+                Track our journey towards 100% scientific waste treatment.
+            </p>
+
+            <div class="grid grid-4">
+                <div class="card">
+                    <div class="facility-header">
+                        <div class="facility-icon text-blue">📊</div>
+                        <div>
+                            <div style="font-size: 1.5rem; font-weight: bold;">1.7L</div>
+                            <div style="color: var(--muted-foreground);">tonnes/day</div>
+                            <div style="font-weight: 500;">Daily Waste Generation</div>
+                            <div style="color: var(--green-600); font-size: 0.875rem;">+2.3% ↗</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="facility-header">
+                        <div class="facility-icon text-green">🏭</div>
+                        <div>
+                            <div style="font-size: 1.5rem; font-weight: bold;">54%</div>
+                            <div style="color: var(--muted-foreground);">of total waste</div>
+                            <div style="font-weight: 500;">Scientific Treatment</div>
+                            <div style="color: var(--green-600); font-size: 0.875rem;">+5.2% ↗</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="facility-header">
+                        <div class="facility-icon text-purple">🚛</div>
+                        <div>
+                            <div style="font-size: 1.5rem; font-weight: bold;">91.8%</div>
+                            <div style="color: var(--muted-foreground);">efficiency</div>
+                            <div style="font-weight: 500;">Waste Collection</div>
+                            <div style="color: var(--green-600); font-size: 0.875rem;">+1.8% ↗</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="facility-header">
+                        <div class="facility-icon text-orange">👥</div>
+                        <div>
+                            <div style="font-size: 1.5rem; font-weight: bold;">15.2M</div>
+                            <div style="color: var(--muted-foreground);">certified</div>
+                            <div style="font-weight: 500;">Trained Citizens</div>
+                            <div style="color: var(--green-600); font-size: 0.875rem;">+12.5% ↗</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Section -->
+    <section id="training" class="section bg-green-50">
+        <div class="container">
+            <h2 class="section-title">Mandatory Waste Management Training</h2>
+            <p class="section-description">
+                Just like military training builds national defense, waste management training builds environmental defense. 
+                Every citizen is a Green Champion in the making.
+            </p>
+
+            <div class="grid grid-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-icon text-green">👥</div>
+                    <div class="card-value">15.2M</div>
+                    <div class="card-label">Trained Citizens</div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-icon text-green">🏆</div>
+                    <div class="card-value">45,000</div>
+                    <div class="card-label">Green Champions</div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-icon text-green">✅</div>
+                    <div class="card-value">78%</div>
+                    <div class="card-label">Completion Rate</div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-icon text-green">📚</div>
+                    <div class="card-value">87/100</div>
+                    <div class="card-label">Avg. Score</div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Your Training Modules</h3>
+            
+            <div class="grid grid-3">
+                <div class="training-card">
+                    <div class="training-header">
+                        <span class="icon-leaf"></span>
+                        <span class="badge badge-progress">In Progress</span>
+                    </div>
+                    <h4 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Waste Segregation Basics</h4>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1rem;">Learn to separate dry, wet, and hazardous waste at source</p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                        <span>⏰ 30 mins</span>
+                        <span>👥 2.3M+</span>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            <span>Progress</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-full">Continue</button>
+                </div>
+
+                <div class="training-card">
+                    <div class="training-header">
+                        <span class="icon-award"></span>
+                        <span class="badge badge-completed">Completed</span>
+                    </div>
+                    <h4 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Home Composting Techniques</h4>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1rem;">Master the art of converting kitchen waste into valuable compost</p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                        <span>⏰ 45 mins</span>
+                        <span>👥 1.8M+</span>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem;">
+                            <span>Progress</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn w-full">Review</button>
+                </div>
+
+                <div class="training-card">
+                    <div class="training-header">
+                        <span>🎥</span>
+                        <span class="badge">Not Started</span>
+                    </div>
+                    <h4 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Plastic Reuse & Recycling</h4>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1rem;">Innovative ways to reuse plastic waste and support circular economy</p>
+                    
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                        <span>⏰ 25 mins</span>
+                        <span>👥 1.5M+</span>
+                    </div>
+
+                    <button class="btn btn-primary w-full">Start Training</button>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; text-align: center;">🧠 Citizen Awareness Quiz</h3>
+                <p style="text-align: center; color: var(--muted-foreground); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Test your knowledge on waste management practices and earn points towards your Green Champion certification.
+                </p>
+
+                <div class="quiz-container" id="quiz-container">
+                    <!-- Quiz Selection Screen -->
+                    <div class="quiz-selection" id="quiz-selection">
+                        <div class="quiz-header">
+                            <div class="quiz-icon">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brain-icon">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                    <path d="M9 9h.01"/>
+                                    <path d="M15 9h.01"/>
+                                </svg>
+                            </div>
+                            <h2>Waste Management Awareness Quiz</h2>
+                            <p>Test your knowledge and become a certified Green Champion!</p>
+                        </div>
+
+                        <div class="quiz-categories">
+                            <div class="category-tabs">
+                                <button class="category-tab active" data-category="waste-segregation">
+                                    Waste Segregation
+                                </button>
+                                <button class="category-tab" data-category="composting">
+                                    Composting
+                                </button>
+                                <button class="category-tab" data-category="recycling">
+                                    Recycling
+                                </button>
+                            </div>
+
+                            <div class="category-content" id="category-content">
+                                <div class="category-info">
+                                    <h3 id="category-title">Waste Segregation Quiz</h3>
+                                    <p id="category-description">Learn the fundamentals of proper waste separation for effective waste management.</p>
+                                    
+                                    <div class="category-stats">
+                                        <div class="stat-item">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10"/>
+                                                <path d="M12 6v6l4 2"/>
+                                            </svg>
+                                            <span id="question-count">5 Questions</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+                                            </svg>
+                                            <span id="difficulty-level">Easy to Hard</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="8" r="7"/>
+                                                <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                                            </svg>
+                                            <span>Certificate Available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-actions">
+                            <button class="start-quiz-btn" id="start-quiz-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5,3 19,12 5,21"/>
+                                </svg>
+                                Start Quiz
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Question Screen -->
+                    <div class="quiz-question" id="quiz-question" style="display: none;">
+                        <div class="quiz-progress">
+                            <div class="progress-info">
+                                <span class="question-number" id="question-number">Question 1 of 5</span>
+                                <span class="quiz-timer" id="quiz-timer">Time: 0:00</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progress-fill"></div>
+                            </div>
+                        </div>
+
+                        <div class="question-content">
+                            <h3 class="question-text" id="question-text"></h3>
+                            <div class="difficulty-badge" id="difficulty-badge"></div>
+                        </div>
+
+                        <div class="answer-options" id="answer-options">
+                            <!-- Answer options will be populated by JavaScript -->
+                        </div>
+
+                        <div class="quiz-navigation">
+                            <button class="nav-btn" id="prev-btn" disabled>Previous</button>
+                            <button class="nav-btn primary" id="next-btn" disabled>Next Question</button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Results Screen -->
+                    <div class="quiz-results" id="quiz-results" style="display: none;">
+                        <div class="results-header">
+                            <div class="trophy-icon">
+                                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                                    <path d="M4 22h16"/>
+                                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+                                </svg>
+                            </div>
+                            <h2>Quiz Complete!</h2>
+                            <p>Here are your results</p>
+                        </div>
+
+                        <div class="score-display">
+                            <div class="score-percentage" id="score-percentage">0%</div>
+                            <div class="performance-badge" id="performance-badge">Good</div>
+                        </div>
+
+                        <div class="score-stats">
+                            <div class="stat-box">
+                                <div class="stat-number" id="correct-answers">0</div>
+                                <div class="stat-label">Correct Answers</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number" id="time-taken">0:00</div>
+                                <div class="stat-label">Time Taken</div>
+                            </div>
+                        </div>
+
+                        <div class="question-review" id="question-review">
+                            <h3>Question Review:</h3>
+                            <div class="review-list" id="review-list">
+                                <!-- Review items will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div class="results-actions">
+                            <button class="action-btn secondary" id="retake-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                    <path d="M21 3v5h-5"/>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                                    <path d="M3 21v-5h5"/>
+                                </svg>
+                                Retake Quiz
+                            </button>
+                            <button class="action-btn primary" id="certificate-btn" style="display: none;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="8" r="7"/>
+                                    <polyline points="8.21,13.89 7,23 12,20 17,23 15.79,13.88"/>
+                                </svg>
+                                Get Certificate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section id="facilities" class="section">
+        <div class="container">
+            <h2 class="section-title">Waste Management Facilities</h2>
+            <p class="section-description">
+                Find nearby waste treatment facilities, recycling centers, and shop for waste management utilities. 
+                Every ULB is equipped with modern waste processing infrastructure.
+            </p>
+
+            <div class="card mb-4">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <input type="text" class="form-input" placeholder="Search by location, facility type, or name..." style="flex: 1;">
+                    <button class="btn btn-primary">🗺️ Find Near Me</button>
+                </div>
+            </div>
+
+            <div class="grid grid-2">
+                <div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Nearby Facilities</h3>
+                    
+                    <div class="facility-card mb-4">
+                        <div class="facility-header">
+                            <div class="facility-icon">🏭</div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                    <div>
+                                        <h4 style="font-weight: 600;">Delhi Bio-methanization Plant</h4>
+                                        <p style="color: var(--muted-foreground); font-size: 0.875rem;">Sector 12, Dwarka, New Delhi</p>
+                                    </div>
+                                    <span class="badge badge-completed">Operational</span>
+                                </div>
+                                
+                                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                                    <span>📍 2.3 km</span>
+                                    <span>🏭 500 TPD</span>
+                                    <span>📞 +91-11-2345-6789</span>
+                                </div>
+                                
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn">Get Directions</button>
+                                    <button class="btn">📞 Contact</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="facility-card mb-4">
+                        <div class="facility-header">
+                            <div class="facility-icon">♻️</div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                    <div>
+                                        <h4 style="font-weight: 600;">Bangalore Recycling Center</h4>
+                                        <p style="color: var(--muted-foreground); font-size: 0.875rem;">Electronic City, Bangalore</p>
+                                    </div>
+                                    <span class="badge badge-completed">Operational</span>
+                                </div>
+                                
+                                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                                    <span>📍 6.1 km</span>
+                                    <span>♻️ 300 TPD</span>
+                                    <span>📞 +91-80-4567-8901</span>
+                                </div>
+                                
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn">Get Directions</button>
+                                    <button class="btn">📞 Contact</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Waste Utility Shop</h3>
+                    
+                    <div class="card mb-4">
+                        <h4 style="font-weight: 600; margin-bottom: 0.5rem;">3-Bin Segregation Set</h4>
+                        <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">Color-coded bins for dry, wet, and hazardous waste</p>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--green-600);">₹299</div>
+                                <div style="font-size: 0.75rem; color: var(--muted-foreground);">⭐ 4.8 • 15K+ orders</div>
+                            </div>
+                            <button class="btn btn-primary">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <h4 style="font-weight: 600; margin-bottom: 0.5rem;">Home Composting Kit</h4>
+                        <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">Complete kit with container, activator, and guide</p>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div style="font-weight: 600; color: var(--green-600);">₹599</div>
+                                <div style="font-size: 0.75rem; color: var(--muted-foreground);">⭐ 4.6 • 8K+ orders</div>
+                            </div>
+                            <button class="btn btn-primary">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="card bg-green-50 border-green">
+                        <div class="text-center">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛍️</div>
+                            <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Free Delivery</h4>
+                            <p style="font-size: 0.875rem; color: var(--muted-foreground);">On orders above ₹500 in your ULB area</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="section bg-green-50">
+        <div class="container">
+            <h2 class="section-title">Community & Participation</h2>
+            <p class="section-description">
+                Join millions of citizens in the national waste management movement. 
+                Share your efforts, learn from others, and build a cleaner India together.
+            </p>
+
+            <div class="grid grid-3">
+                <div style="grid-column: span 2;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1.5rem;">Community Feed</h3>
+                        <button class="btn btn-primary">📷 Share Update</button>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="avatar">PS</div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-weight: 600;">Priya Sharma</span>
+                                    <span class="badge badge-completed">Green Champion</span>
+                                </div>
+                                <div style="font-size: 0.875rem; color: var(--muted-foreground);">
+                                    <span>2 hours ago</span> • <span>Community Drive</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-bottom: 1rem;">Great community cleanup drive in our locality! 🌱 Collected 200kg of waste and segregated it properly. Thanks to everyone who participated!</p>
+                        
+                        <img src="https://images.unsplash.com/photo-1643213410761-879689e61a7a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb21tdW5pdHklMjB2b2x1bnRlZXIlMjBjbGVhbmluZ3xlbnwxfHx8fDE3NTczNDk2Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080" 
+                             alt="Community cleanup" 
+                             class="post-image">
+                        
+                        <div class="post-actions">
+                            <button class="btn">❤️ 45</button>
+                            <button class="btn">💬 12</button>
+                            <button class="btn">📤 Share</button>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="avatar">RK</div>
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span style="font-weight: 600;">Rajesh Kumar</span>
+                                    <span class="badge badge-progress">Waste Worker</span>
+                                </div>
+                                <div style="font-size: 0.875rem; color: var(--muted-foreground);">
+                                    <span>5 hours ago</span> • <span>Training</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-bottom: 1rem;">Completed safety training module today. The new protective gear distribution program is really helpful for our team. #SafetyFirst</p>
+                        
+                        <div class="post-actions">
+                            <button class="btn">❤️ 23</button>
+                            <button class="btn">💬 8</button>
+                            <button class="btn">📤 Share</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card mb-4">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">🏆 Community Leaderboard</h3>
+                        <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">Top performing communities this month</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--muted); display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 500; font-size: 0.875rem;">Eco Warriors Delhi</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted-foreground);">2840 points</div>
+                                </div>
+                                <span style="font-size: 1.125rem;">🏆</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--muted); display: flex; align-items: center; justify-content: center; font-weight: bold;">2</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 500; font-size: 0.875rem;">Green Mumbai Initiative</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted-foreground);">2720 points</div>
+                                </div>
+                                <span style="font-size: 1.125rem;">🥈</span>
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 2rem; height: 2rem; border-radius: 50%; background: var(--muted); display: flex; align-items: center; justify-content: center; font-weight: bold;">3</div>
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 500; font-size: 0.875rem;">Clean Bangalore Mission</div>
+                                    <div style="font-size: 0.75rem; color: var(--muted-foreground);">2650 points</div>
+                                </div>
+                                <span style="font-size: 1.125rem;">🥉</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Your Community Impact</h3>
+                        
+                        <div class="text-center mb-4">
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--green-600);">1,250</div>
+                            <div style="font-size: 0.875rem; color: var(--muted-foreground);">Points Earned</div>
+                        </div>
+                        
+                        <div class="grid grid-2 text-center mb-4">
+                            <div>
+                                <div style="font-weight: bold;">15</div>
+                                <div style="font-size: 0.75rem; color: var(--muted-foreground);">Events Joined</div>
+                            </div>
+                            <div>
+                                <div style="font-weight: bold;">8</div>
+                                <div style="font-size: 0.75rem; color: var(--muted-foreground);">Posts Shared</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn w-full">View Full Profile</button>
+                    </div>
+
+                    <div class="card bg-red-50 border-red">
+                        <h4 style="font-weight: 600; color: var(--red-800); margin-bottom: 0.5rem;">⚠️ Penalty System</h4>
+                        <p style="font-size: 0.875rem; color: var(--red-700);">
+                            Buildings not segregating waste at source face collection suspension and fines. 
+                            Ensure proper segregation to avoid penalties.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Section -->
+    <section id="report" class="section">
+        <div class="container">
+            <h2 class="section-title">Report Waste Issues</h2>
+            <p class="section-description">
+                "If you see waste, send photo" - Help us maintain cleanliness by reporting waste management issues 
+                in your area. Every report helps build a cleaner India.
+            </p>
+
+            <div class="grid grid-3">
+                <div style="grid-column: span 2;">
+                    <div class="report-form">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">📷 Submit New Report</h3>
+                        <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">Upload geo-tagged photos and describe the waste management issue</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Issue Category</label>
+                            <div class="grid grid-3 gap-2">
+                                <button class="btn">Illegal Dumping</button>
+                                <button class="btn">Overflowing Bins</button>
+                                <button class="btn">Burning Waste</button>
+                                <button class="btn">Blocked Drains</button>
+                                <button class="btn">Missed Collection</button>
+                                <button class="btn">Other</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="text" class="form-input" placeholder="Enter address or landmark" style="flex: 1;">
+                                <button class="btn">📍 Use GPS</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-input form-textarea" placeholder="Describe the waste management issue in detail..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Upload Photos</label>
+                            <div class="upload-area">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">📷</div>
+                                <p style="margin-bottom: 0.5rem;">Click to upload photos or drag and drop</p>
+                                <p style="font-size: 0.875rem;">PNG, JPG up to 10MB each</p>
+                                <button class="btn mt-4">Choose Files</button>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem; background: var(--yellow-50); border: 1px solid rgba(202, 138, 4, 0.3); border-radius: var(--radius); margin-bottom: 1.5rem;">
+                            <span style="color: var(--yellow-600);">⚠️</span>
+                            <p style="font-size: 0.875rem; color: var(--yellow-700);">
+                                Reports with clear photos and accurate locations get faster response times
+                            </p>
+                        </div>
+
+                        <button class="btn btn-primary btn-lg w-full">📤 Submit Report</button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card mb-4">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Recent Reports</h3>
+                        <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 1rem;">Track your submitted reports and community updates</p>
+                        
+                        <div style="padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; font-weight: 500;">RPT-2025-001</span>
+                                <span class="badge badge-completed">Resolved</span>
+                            </div>
+                            <h4 style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Illegal dumping near bus stop</h4>
+                            <div style="font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">📍 MG Road, Sector 15</div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
+                                <span style="color: var(--muted-foreground);">Sep 5, 2025</span>
+                                <span class="badge" style="background: rgba(220, 38, 38, 0.1); color: var(--red-600);">High</span>
+                            </div>
+                        </div>
+
+                        <div style="padding: 1rem; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <span style="font-size: 0.875rem; font-weight: 500;">RPT-2025-002</span>
+                                <span class="badge badge-progress">In Progress</span>
+                            </div>
+                            <h4 style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem;">Overflowing waste bins</h4>
+                            <div style="font-size: 0.75rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">📍 Central Market, Block C</div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem;">
+                                <span style="color: var(--muted-foreground);">Sep 7, 2025</span>
+                                <span class="badge" style="background: rgba(202, 138, 4, 0.1); color: var(--yellow-600);">Medium</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Your Impact</h3>
+                        
+                        <div class="grid grid-2 text-center mb-4">
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: var(--green-600);">12</div>
+                                <div style="font-size: 0.875rem; color: var(--muted-foreground);">Reports Submitted</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.5rem; font-weight: bold; color: var(--blue-600);">8</div>
+                                <div style="font-size: 0.875rem; color: var(--muted-foreground);">Issues Resolved</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                                <span style="color: var(--green-600);">✅</span>
+                                <span>Top Reporter Badge Earned</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                                <span style="color: var(--yellow-600);">⏰</span>
+                                <span>Average response: 24 hours</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-red-50 border-red">
+                        <h3 style="color: var(--red-800); margin-bottom: 1rem;">Emergency Waste Issues</h3>
+                        <p style="font-size: 0.875rem; color: var(--red-700); margin-bottom: 1rem;">
+                            For urgent issues like hazardous waste spills or health threats, contact immediately:
+                        </p>
+                        <button style="background: var(--red-600); color: white;" class="btn w-full">
+                            Emergency Hotline: 1800-XXX-XXXX
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo mb-4">
+                        <span class="logo-icon">🌱</span>
+                        <span>WasteWise India</span>
+                    </div>
+                    <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">
+                        Transforming India's waste management through technology, training, and community participation. 
+                        Building a cleaner, greener future for all.
+                    </p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📷</a>
+                        <a href="#">📺</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Quick Links</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem;">
+                        <a href="#training" style="color: var(--muted-foreground); text-decoration: none;">Training Modules</a>
+                        <a href="#facilities" style="color: var(--muted-foreground); text-decoration: none;">Find Facilities</a>
+                        <a href="#report" style="color: var(--muted-foreground); text-decoration: none;">Report Issues</a>
+                        <a href="#community" style="color: var(--muted-foreground); text-decoration: none;">Community Forum</a>
+                        <a href="#" style="color: var(--muted-foreground); text-decoration: none;">Green Champion Program</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Government Portals</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem;">
+                        <a href="#" style="color: var(--muted-foreground); text-decoration: none;">Ministry of Environment</a>
+                        <a href="#" style="color: var(--muted-foreground); text-decoration: none;">Central Pollution Control Board</a>
+                        <a href="#" style="color: var(--muted-foreground); text-decoration: none;">Swachh Bharat Mission</a>
+                        <a href="#" style="color: var(--muted-foreground); text-decoration: none;">Digital India</a>
+                        <a href="#" style="color: var(--muted-foreground); text-decoration: none;">Smart Cities Mission</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-weight: 600; margin-bottom: 1rem;">Contact Us</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: var(--green-600);">📞</span>
+                            <span style="color: var(--muted-foreground);">1800-XXX-WASTE</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: var(--green-600);">📧</span>
+                            <span style="color: var(--muted-foreground);">support@wastewise.gov.in</span>
+                        </div>
+                        <div style="display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.875rem;">
+                            <span style="color: var(--green-600);">📍</span>
+                            <span style="color: var(--muted-foreground);">
+                                Ministry of Social Justice & Empowerment<br />
+                                New Delhi, India
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 0.75rem; background: var(--red-50); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: var(--radius); margin-top: 1rem;">
+                        <div style="font-size: 0.75rem; color: var(--red-800); font-weight: 500;">Emergency Waste Hotline</div>
+                        <div style="font-size: 0.875rem; color: var(--red-700);">1800-EMERGENCY</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div style="font-size: 0.875rem; color: var(--muted-foreground);">
+                    © 2025 WasteWise India. A Government of India Initiative under Smart India Hackathon.
+                </div>
+                <div style="display: flex; gap: 1.5rem; font-size: 0.875rem; color: var(--muted-foreground);">
+                    <a href="#" style="color: inherit; text-decoration: none;">Privacy Policy</a>
+                    <a href="#" style="color: inherit; text-decoration: none;">Terms of Service</a>
+                    <a href="#" style="color: inherit; text-decoration: none;">Accessibility</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple smooth scrolling for navigation links
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Simple form interactions
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Add click animation
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // Category selection for report form
+            const categoryButtons = document.querySelectorAll('.form-group .btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active state from all category buttons
+                    categoryButtons.forEach(btn => {
+                        btn.style.background = '';
+                        btn.style.color = '';
+                    });
+                    
+                    // Add active state to clicked button
+                    this.style.background = 'var(--green-600)';
+                    this.style.color = 'white';
+                });
+            });
+        });
+    </script>
+    <script src="/js/quiz.js"></script>
+</body>
+</html>
